@@ -2,7 +2,7 @@
 <view class='panel'>
   <view class='row'>
     
-  <navigator url='/pages/list/list?cateUrl={{item.categoryUrl}}' class='col-6 item' 
+  <navigator url='/pages/list/list?categoryUrl={{item.categoryUrl}}' class='col-6 item' 
       wx:for="{{result}}" wx:if="{{item.cateName !='全部'}}">
       <view class='row'>
         <view class='col-4'>
@@ -19,7 +19,3 @@
 
 </view>
 <i-toast id="toast" />
-
-
-
-

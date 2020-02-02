@@ -1,4 +1,4 @@
-const basePath = 'http://127.0.0.1:8888';
+const basePath = 'https://127.0.0.1';
 
 function formatTime(date) {
   var year = date.getFullYear()
