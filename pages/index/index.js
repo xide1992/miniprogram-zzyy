@@ -20,7 +20,15 @@ Page({
     interval: 5000,     //自动切换时间间隔
     duration: 1000,      //滑动动画时长
     tip: "",
-    loading: false
+    loading: false,
+    markers: [{
+      iconPath: "/images/location.png",
+      id: 0,
+      latitude: 31.242879,
+      longitude: 120.706800,
+      width: 40,
+      height: 40
+    }],
   },
   onSearch: function (event) {
     // 搜索事件  点击完成按钮时触发，event.detail = {value: value}
