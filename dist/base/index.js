@@ -1,7 +1,6 @@
 function getCtx (selector) {
     const pages = getCurrentPages();
     const ctx = pages[pages.length - 1];
-
     const componentCtx = ctx.selectComponent(selector);
 
     if (!componentCtx) {

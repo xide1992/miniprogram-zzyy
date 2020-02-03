@@ -1,4 +1,6 @@
-const basePath = 'https://127.0.0.1';
+const basePath = 'https://www.hh7940.top';
+
+//https://127.0.0.1
 
 function formatTime(date) {
   var year = date.getFullYear()

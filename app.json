@@ -56,9 +56,6 @@
     "downloadFile": 60000
   },
   "debug": true,
-  "navigateToMiniProgramAppIdList": [
-    "wxe5f52902cf4de896"
-  ],
   "plugins": {
     "htmltowxml": {
       "version": "1.4.0",
