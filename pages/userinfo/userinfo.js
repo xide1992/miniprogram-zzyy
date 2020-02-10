@@ -1,7 +1,7 @@
 //获取应用实例
 const app = getApp()
 const { $Toast } = require('../../dist/base/index');
-const ctx = wx.createCanvasContext('shareCanvas')
+// const ctx = wx.createCanvasContext('shareCanvas')
 Page({
   data: {
     active: 0,
@@ -103,7 +103,7 @@ Page({
   },
   onReady: function () {
   
-    this.create();
+   // this.create();
     //创建初始化图片
 
   },
@@ -143,8 +143,8 @@ Page({
   create: function () {
     let that = this;
     //图片一把是通过接口请求后台，返回俩点地址，或者网络图片
-    let bg = 'https://www.qinxuewu.club/upload/2018/11/170644l325qooyabhioyaa20181224181300736.jpg';
-    let qr = 'http://www.qinxuewu.club/upload/2018/11/gh_389b881555ad_25820181225234435110.jpg';
+    let bg = 'https://www.hh7940.top/images/111.jpg';
+    let qr = 'https://www.hh7940.top/images/222.jpg';
     //图片区别下载完成，生成临时路径后，在尽心绘制
     this.getImageAll([bg, qr]).then((res) => {
       let bg = res[0];
@@ -161,7 +161,7 @@ Page({
       ctx.setFontSize(20)
       ctx.setFillStyle('black')
       ctx.setTextAlign('center')
-      ctx.fillText('一款简单的小程序博客', bg.width - qr.width - 1, bg.height - qr.height - 190)
+      ctx.fillText('一款简单的小程序', bg.width - qr.width - 1, bg.height - qr.height - 190)
       ctx.draw(that.save());
 
       // wx.showModal({
