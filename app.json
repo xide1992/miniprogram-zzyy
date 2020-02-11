@@ -6,8 +6,6 @@
     "pages/details/details",
     "pages/list/list",
     "pages/search/search",
-    "pages/webview/webview",
-    "pages/placard/placard",
     "pages/about/about"
   ],
   "window": {

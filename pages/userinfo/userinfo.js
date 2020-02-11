@@ -103,7 +103,7 @@ Page({
   },
   onReady: function () {
   
-   // this.create();
+     this.create();
     //创建初始化图片
 
   },
@@ -144,7 +144,7 @@ Page({
     let that = this;
     //图片一把是通过接口请求后台，返回俩点地址，或者网络图片
     let bg = 'https://www.hh7940.top/images/111.jpg';
-    let qr = 'https://www.hh7940.top/images/222.jpg';
+    let qr = 'https://www.hh7940.top/images/xcxm.jpg';
     //图片区别下载完成，生成临时路径后，在尽心绘制
     this.getImageAll([bg, qr]).then((res) => {
       let bg = res[0];
@@ -156,12 +156,14 @@ Page({
         canvasLeft: `-${bg.width + 100}px`,
       })
       let ctx = wx.createCanvasContext('canvas');
+
       ctx.drawImage(bg.path, 0, 0, bg.width, bg.height);
-      ctx.drawImage(qr.path, bg.width - qr.width - 100, bg.height - qr.height - 150, qr.width * 0.8, qr.height * 0.8)
-      ctx.setFontSize(20)
-      ctx.setFillStyle('black')
-      ctx.setTextAlign('center')
-      ctx.fillText('一款简单的小程序', bg.width - qr.width - 1, bg.height - qr.height - 190)
+      ctx.drawImage(qr.path,  (bg.width-qr.width)/2+120, bg.height-300, qr.width*1.1 , qr.height*1.1 )
+      ctx.setFontSize(30)
+      ctx.setFillStyle('#000000')
+      //ctx.setTextAlign('center')
+      //ctx.fillText('一款简单的小程序', bg.width - qr.width - 1, bg.height - qr.height - 190)
+      ctx.fillText('一款简单的小程序', (bg.width-qr.width)/2+120, bg.height-350)
       ctx.draw(that.save());
 
       // wx.showModal({
@@ -228,7 +230,8 @@ Page({
             })
           }
         });
-  }, onPullDownRefresh() {
+  },
+   onPullDownRefresh() {
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
     setTimeout(function () {
