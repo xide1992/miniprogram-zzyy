@@ -38,8 +38,9 @@ App({
     }
   },
   globalData: {
+    openid:"",
     userInfo: {
-      nickName: 'Hi,游',
+      nickName: 'HiHi',
       avatarUrl: '/images/defule.png'
     },
   },

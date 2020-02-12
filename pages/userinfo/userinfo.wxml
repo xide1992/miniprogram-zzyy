@@ -5,6 +5,7 @@
   <view class='user'>
       <image  class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <view class='username'>{{userInfo.nickName}}</view>
+      <view class='username'>{{openid}}</view>
     <view class='color-grey font-lv3'>xxxxx</view>
   </view>
 </view>

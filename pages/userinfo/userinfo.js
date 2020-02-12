@@ -1,58 +1,81 @@
 //获取应用实例
 const app = getApp()
-const { $Toast } = require('../../dist/base/index');
+const {
+  $Toast
+} = require('../../dist/base/index');
+const util = require('../../utils/util.js');
 // const ctx = wx.createCanvasContext('shareCanvas')
 Page({
   data: {
     active: 0,
+    openid: "",
     userInfo: {},
     hiddenName: true,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),  //判断小程序的API，回调，参数，组件等是否在当前版本可用。
+    canIUse: wx.canIUse('button.open-type.getUserInfo'), //判断小程序的API，回调，参数，组件等是否在当前版本可用。
     canvasWidth: "",
     canvasHeight: "",
     canvasLeft: "",
     canvasTop: "",
-    showhaibao:false,//隐藏显示
-    maskHidden: true//隐藏显示
+    showhaibao: false, //隐藏显示
+    maskHidden: true //隐藏显示
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    var that=this;
+    var that = this;
     //获取用户的当前设置。返回值中只会出现小程序已经向用户请求过的权限。
     wx.getSetting({
       success: res => {
         console.log('获取小程序已经向用户请求过的权限:')
         console.log(res)
-        if (res.authSetting['scope.userInfo']) {         
+        if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 本地缓存 获取头像昵称
           console.log('已经授权')
 
           try {
             var value = wx.getStorageSync('userInfo')
+            var openid = wx.getStorageSync('openid')
             console.log(value);
+            console.log(openid);
             if (value) {
               app.globalData.userInfo = value;
-              that.setData({ userInfo: value})
-            }else{
-                that.setData({ hiddenName: false });
-                console.log('缓存中无数据');
+              that.setData({
+                userInfo: value
+              })
+            } else {
+              that.setData({
+                hiddenName: false
+              });
+              console.log('缓存中无数据');
+            }
+            if (openid) {
+              app.globalData.openid = openid;
+              that.setData({
+                openid: openid
+              })
+            } else {
+              console.log('缓存中无数据');
             }
           } catch (e) {
-              console.log(e);
+            console.log(e);
           }
 
         } else {
-          that.setData({ userInfo: app.globalData.userInfo});
-            //未授权
-          this.setData({hiddenName: false})
+          that.setData({
+            userInfo: app.globalData.userInfo
+          });
+          //未授权
+          this.setData({
+            hiddenName: false
+          })
         }
       }
     })
-  }, 
+  },
   bindGetUserInfo: function (e) {
+    var that = this;
     //授权按钮
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
@@ -63,28 +86,51 @@ Page({
         userInfo: e.detail.userInfo,
         hasUserInfo: true
       })
-      this.setData({ hiddenName: true })
+      this.setData({
+        hiddenName: true
+      })
       //调用登录
       wx.login({
         success(res) {
-          console.log('code:'+res.code);
+          console.log('code:' + res.code);
           if (res.code) {
+
+            //发起网络请求
+            wx.request({
+              url: util.basePath + '/wechat/wxLogin',
+              data: {
+                code: res.code
+              },
+              header: {
+                'content-type': 'application/json'
+              },
+              success(res) {
+                app.globalData.openid = res.data;
+                that.setData({
+                  openid: res.data
+                });
+                 //本地缓存
+              wx.setStorageSync('openid',  res.data)
+              }
+            })
+
             // 必须是在用户已经授权的情况下调用
             wx.getUserInfo({
               success(res) {
-                console.log('encryptedData:'+res.encryptedData);
-                console.log('iv:'+res.iv);
-               
+                console.log('encryptedData:' + res.encryptedData);
+                console.log('iv:' + res.iv);
               }
             })
-          } 
+          }
         }
       })
 
     } else {
       //用户按了拒绝按钮
       console.log('用户按了拒绝按钮')
-      this.setData({ hiddenName: false })
+      this.setData({
+        hiddenName: false
+      })
     }
   },
   /**
@@ -102,12 +148,12 @@ Page({
     }
   },
   onReady: function () {
-  
-     this.create();
+
+    this.create();
     //创建初始化图片
 
   },
-  onShow:function(){
+  onShow: function () {
     this.setData({
       maskHidden: true,
       showhaibao: false
@@ -158,12 +204,12 @@ Page({
       let ctx = wx.createCanvasContext('canvas');
 
       ctx.drawImage(bg.path, 0, 0, bg.width, bg.height);
-      ctx.drawImage(qr.path,  (bg.width-qr.width)/2+120, bg.height-300, qr.width*1.1 , qr.height*1.1 )
+      ctx.drawImage(qr.path, (bg.width - qr.width) / 2 + 120, bg.height - 300, qr.width * 1.1, qr.height * 1.1)
       ctx.setFontSize(30)
       ctx.setFillStyle('#000000')
       //ctx.setTextAlign('center')
       //ctx.fillText('一款简单的小程序', bg.width - qr.width - 1, bg.height - qr.height - 190)
-      ctx.fillText('一款简单的小程序', (bg.width-qr.width)/2+120, bg.height-350)
+      ctx.fillText('一款简单的小程序', (bg.width - qr.width) / 2 + 120, bg.height - 350)
       ctx.draw(that.save());
 
       // wx.showModal({
@@ -188,13 +234,19 @@ Page({
       success: function (res) {
         console.log(res.tempFilePath);
         var tempFilePath = res.tempFilePath;
-        that.setData({imagePath: tempFilePath});
-      
+        that.setData({
+          imagePath: tempFilePath
+        });
+
       }
     })
   },
   gotoSubmit: function (e) {
-    $Toast({ content: '图片生成中...',type: 'loading', duration:0});
+    $Toast({
+      content: '图片生成中...',
+      type: 'loading',
+      duration: 0
+    });
     var _this = this
     setTimeout(function () {
       _this.create();
@@ -203,7 +255,7 @@ Page({
         showhaibao: true
       })
       $Toast.hide();
-    },2000)
+    }, 2000)
 
   },
   //点击图片进行预览，长按保存分享图片
@@ -214,24 +266,24 @@ Page({
       urls: [img] // 需要预览的图片http链接列表
     })
   },
-  savelocalImg:function(){
+  savelocalImg: function () {
     var _this = this
-     wx.saveImageToPhotosAlbum({ 
-          //下载图片
-       filePath: _this.data.imagePath,
-          success: function () {
-            wx.showToast({
-              title: "保存成功",
-              icon: "success",
-            })
-            _this.setData({
-              maskHidden: false,
-              showhaibao: true
-            })
-          }
-        });
+    wx.saveImageToPhotosAlbum({
+      //下载图片
+      filePath: _this.data.imagePath,
+      success: function () {
+        wx.showToast({
+          title: "保存成功",
+          icon: "success",
+        })
+        _this.setData({
+          maskHidden: false,
+          showhaibao: true
+        })
+      }
+    });
   },
-   onPullDownRefresh() {
+  onPullDownRefresh() {
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
     setTimeout(function () {
