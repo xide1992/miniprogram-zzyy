@@ -86,7 +86,6 @@ Page({
       },
       success(res) {
         if (res.statusCode == 200) {
-          debugger;
           if (res.data != null) {
             console.log('接口返回数据加载数据');
             that.setData({
