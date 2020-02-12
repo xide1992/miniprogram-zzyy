@@ -6,7 +6,8 @@
     "pages/details/details",
     "pages/list/list",
     "pages/search/search",
-    "pages/about/about"
+    "pages/about/about",
+    "pages/dbs/dbs"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -40,6 +41,12 @@
         "iconPath": "images/fenlei-select.png",
         "selectedIconPath": "images/fenlei.png",
         "text": "分类"
+      },
+      {
+        "pagePath": "pages/dbs/dbs",
+        "iconPath": "images/cate.png",
+        "selectedIconPath": "images/cate-selected.png",
+        "text": "数据库文档"
       },
       {
         "pagePath": "pages/userinfo/userinfo",

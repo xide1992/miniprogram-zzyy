@@ -56,7 +56,7 @@ Page({
                 openid: openid
               })
             } else {
-              console.log('缓存中无数据');
+              console.log('缓存中无openid');
             }
           } catch (e) {
             console.log(e);
